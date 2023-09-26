@@ -1,0 +1,19 @@
+{
+  "name": "practise_3",
+  "version": "1.0.0",
+  "description": "Practise MVC and postgres",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Yojit Sutradhar",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.6.1",
+    "nodemon": "^3.0.1"
+  }
+}
