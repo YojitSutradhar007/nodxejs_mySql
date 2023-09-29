@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const testRoute = require('./routes/demo_route');
+const SqRoute = require('./routes/Sq_route');
 
 
 app.use((req, res, next) => {
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
 app.use('/demo', testRoute);
+app.use('/demoSq', SqRoute);
 
 // middle ware
 
