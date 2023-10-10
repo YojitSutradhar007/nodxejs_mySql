@@ -75,6 +75,7 @@ app.get(/a/, (req, res) => {
 app.get('/home', (req, res) => {
     const query = req.query
     const pro = new Product("Test title Written by jimmy", "Test description");
+    pro.print();
     res.status(200).send(`Hello jimmmy ${pro.title} name ${query.name} age ${query.age}`);
 })
 

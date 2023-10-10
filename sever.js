@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const testRoute = require('./routes/demo_route');
 const SqRoute = require('./routes/Sq_route');
+const mailRoute = require('./routes/send_mail');
+
 
 
 app.use((req, res, next) => {
@@ -18,6 +20,8 @@ app.use(bodyParser.json())
 
 app.use('/demo', testRoute);
 app.use('/demoSq', SqRoute);
+app.use('/email', mailRoute);
+
 
 // middle ware
 

@@ -8,7 +8,7 @@ class Product {
     }
 
     print(){
-        console.log("Title: "+this.title);
+        console.log("Title: "+this);
         console.log("Description: "+this.description);
     }
 }

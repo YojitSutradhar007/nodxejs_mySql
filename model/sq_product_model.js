@@ -26,6 +26,5 @@ const productModel = sqDb.define('newProducts', {
     }
 });
 
-sqDb.sync();
 
 module.exports = productModel;

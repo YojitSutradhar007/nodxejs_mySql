@@ -1,0 +1,7 @@
+{
+    "editor.cursorBlinking": "expand",
+    "workbench.colorCustomizations": {
+        "editorCursor.foreground": "#069A8E",
+        "terminalCursor.foreground": "#069A8E"
+}
+}
