@@ -1,13 +1,12 @@
 const nodemailer = require("nodemailer");
 const express = require("express");
 const router = express();
-
+// complete sending email request to user 
 const transporter = nodemailer.createTransport({
-    host: "smtp.forwardemail.net",
-    port: 587,
+    service: "gmail",
     auth: {
         user: 'jimmysuthar08@gmail.com',
-        pass: '@123Password'
+        pass: 'ylzallnhcosdpsui'
     }
 });
 
@@ -16,7 +15,7 @@ const transporter = nodemailer.createTransport({
 router.get('/sendEmail', async (req, res, next) => {
 
     const info = await transporter.sendMail({
-        from: '"Fred Foo 👻" <peter.heidenreich75@ethereal.email>', // sender address
+        from: '"Fred Foo 👻" <jimmysuthar08@gmail.com>', // sender address
         to: "jimmysuthar789@gmail.com", // list of receivers
         subject: "Hello Jimmy Suthar", // Subject line
         text: "Hello world?", // plain text body
