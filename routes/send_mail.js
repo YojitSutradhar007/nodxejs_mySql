@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const express = require("express");
 const router = express();
+const { body, validationResult } = require('express-validator')
 // complete sending email request to user 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -10,13 +11,38 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+router.get('/sendEmail', [
+    // Check if email is valid or not
+    body("email").optional().isEmail().withMessage("Provide valid email"),
+    // for demo purposes
+    body('lastName').trim().not().isEmpty().withMessage('Custoum').isLength({ min: 3, max: 5 }).withMessage('Please enter only letters, numbers'),
+    // ADd custom validation function
+    body('firstName').custom(value => {
+        if (value === 'jimmy') {
+            throw new Error("Email is not valid ");
+        }
+    })
+], async (req, res, next) => {
+    const email = req.body.email;
+    const errors = validationResult(req);
 
-
-router.get('/sendEmail', async (req, res, next) => {
+    // if there is error then return Error
+    if (!errors.isEmpty()) {
+        console.log(req);
+        return res.status(400).json({
+            success: false,
+            errors: errors.array(),
+        });
+    }
+    // if (!email) {
+    //     return res.status(404).json({
+    //         Message: "Email can't be empty"
+    //     });
+    // }
 
     const info = await transporter.sendMail({
         from: '"Fred Foo 👻" <jimmysuthar08@gmail.com>', // sender address
-        to: "jimmysuthar789@gmail.com", // list of receivers
+        to: email, // list of receivers
         subject: "Hello Jimmy Suthar", // Subject line
         text: "Hello world?", // plain text body
         html: `<html>
