@@ -1,7 +1,8 @@
 const nodemailer = require("nodemailer");
 const express = require("express");
 const router = express();
-const { body, validationResult } = require('express-validator')
+const { body, validationResult } = require('express-validator');
+const User = require("../model/user_model");
 // complete sending email request to user 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -17,10 +18,21 @@ router.get('/sendEmail', [
     // for demo purposes
     body('lastName').trim().not().isEmpty().withMessage('Custoum').isLength({ min: 3, max: 5 }).withMessage('Please enter only letters, numbers'),
     // ADd custom validation function
-    body('firstName').custom(value => {
-        if (value === 'jimmy') {
-            throw new Error("Email is not valid ");
-        }
+    body('firstName').custom((value, { req }) => {
+
+        return User.count({ where: { email: req.body.firstName } }).then((user) => {
+            console.log(user);
+            if (user > 0) {
+                console.log(req.body);
+                throw new Error("Email is already in use");
+                // return Promise.reject("Email is already in use/ without validation");
+                // return res.status(200).json({ sucess: false });
+
+            }
+        });
+
+
+        return true;
     })
 ], async (req, res, next) => {
     const email = req.body.email;
@@ -28,10 +40,11 @@ router.get('/sendEmail', [
 
     // if there is error then return Error
     if (!errors.isEmpty()) {
-        console.log(req);
         return res.status(400).json({
             success: false,
             errors: errors.array(),
+
+
         });
     }
     // if (!email) {

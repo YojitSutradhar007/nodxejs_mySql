@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const Product = require('../model/product_model');
 const db = require('../util/database');
-
+const user = require('../model/user_model');
 
 // app.use('/ab?cd', (req, res) => {
 //     res.send('ab?cd')
@@ -22,13 +22,21 @@ const cb2 = function (req, res) {
     res.send('Hello from C!')
 }
 
+app.get('/find', async (req, res, next) => {
+    const A = await user.count({ where: { email: req.body.email } }).then((value) => {
+        console.log(value);
+
+    });
+
+})
+
 app.get('/example/c', [cb0, cb1, cb2])
 
 app.get('/product/:id', (req, res, next) => {
     const id = req.params.id;
     db.execute('SELECT * FROM products WHERE id = ?', [id])
-        .then(([data,filed]) => {
-            return res.status(200).json({ sucess: true,data: data });
+        .then(([data, filed]) => {
+            return res.status(200).json({ sucess: true, data: data });
         })
         .catch((err) => {
             console.log(err);
